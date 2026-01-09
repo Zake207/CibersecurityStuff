@@ -13,7 +13,7 @@ Al desarrollar este programa dentro de un wsl, windows no permite que este tengo
 y puede dar problemas.
 
 Si se estuviera en ubuntu, al hacer uso de keyboard, que accede a carpetas de hardware a las que solo puede entrar root
-habría que probar a meterlo en el grupo input con -> sudo usermod -aG input user
+habría que lograr ejecutarlo como sudo en cualquier caso lo cual añade complicaciones adicionales
 
 Para crear el ejecutable basta con instalar el módulo pyinstaller y ejecutar pyinstaller -onefile ./keylogger.py
 
